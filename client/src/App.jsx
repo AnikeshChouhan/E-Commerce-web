@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { AdminLayout } from "./components/admin-view/layout";
 import { AuthLayout } from "./components/auth/layout";
+import { CheckAuth } from "./components/common/check-auth";
 import { ShoppingLayout } from "./components/shopping-view/layout";
 import { AdminDashboard } from "./pages/admin-view/dashboard";
 import { AdminFeatures } from "./pages/admin-view/features";
@@ -13,10 +14,14 @@ import { ShoppingAccount } from "./pages/shopping-view/account";
 import { ShoppingCheckout } from "./pages/shopping-view/checkout";
 import { ShoppingHome } from "./pages/shopping-view/home";
 import { ShoppingListing } from "./pages/shopping-view/listing";
+import { UnauthPage } from "./pages/unauth-page";
 
-export const App = () => {
-  const isAuthenticated = false;
-  const user = null;
+const App = () => {
+  const isAuthenticated = true;
+  const user = {
+    name: "anikesh",
+    role: "admin",
+  };
   return (
     <>
       <div className="flex flex-column overflow-hidden bg-white">
@@ -25,7 +30,7 @@ export const App = () => {
           <Route
             path="/auth"
             element={
-              <CheckAuth isAuthenticated={{ isAuthenticated }} user={user}>
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
                 <AuthLayout />
               </CheckAuth>
             }
@@ -37,7 +42,7 @@ export const App = () => {
           <Route
             path="/admin"
             element={
-              <CheckAuth isAuthenticated={{ isAuthenticated }} user={user}>
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
                 <AdminLayout />
               </CheckAuth>
             }
@@ -51,7 +56,7 @@ export const App = () => {
           <Route
             path="/shop"
             element={
-              <CheckAuth isAuthenticated={{ isAuthenticated }} user={user}>
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
                 <ShoppingLayout />
               </CheckAuth>
             }
@@ -62,8 +67,10 @@ export const App = () => {
             <Route path="checkout" element={<ShoppingCheckout />} />
           </Route>
           <Route path="*" element={<NotFound />} />
+          <Route path="/unauth-page" element={<UnauthPage />} />
         </Routes>
       </div>
     </>
   );
 };
+export default App;
