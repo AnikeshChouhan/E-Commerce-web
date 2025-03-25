@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { AdminLayout } from "./components/admin-view/layout";
 import { AuthLayout } from "./components/auth/layout";
-import { CheckAuth } from "./components/common/check-auth";
 import { ShoppingLayout } from "./components/shopping-view/layout";
 import { AdminDashboard } from "./pages/admin-view/dashboard";
 import { AdminFeatures } from "./pages/admin-view/features";
@@ -23,7 +22,6 @@ export const App = () => {
       <div className="flex flex-column overflow-hidden bg-white">
         <Routes>
           {/* auth */}
-          <Route path="/auth" element={<AuthLayout />}>
           <Route
             path="/auth"
             element={
@@ -36,7 +34,6 @@ export const App = () => {
             <Route path="register" element={<AuthRegister />} />
           </Route>
           {/* admin */}
-          <Route path="/admin" element={<AdminLayout />}>
           <Route
             path="/admin"
             element={
@@ -51,7 +48,14 @@ export const App = () => {
             <Route path="features" element={<AdminFeatures />} />
           </Route>
           {/* shopping */}
-          <Route path="/shop" element={<ShoppingLayout />}>
+          <Route
+            path="/shop"
+            element={
+              <CheckAuth isAuthenticated={{ isAuthenticated }} user={user}>
+                <ShoppingLayout />
+              </CheckAuth>
+            }
+          >
             <Route path="home" element={<ShoppingHome />} />
             <Route path="list" element={<ShoppingListing />} />
             <Route path="account" element={<ShoppingAccount />} />
