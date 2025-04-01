@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import { router } from "./routes/auth/auth-routes";
+
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
@@ -50,6 +52,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+app.use("/api/auth", router);
 app.listen(PORT, () => {
   console.log("Server is Running on " + PORT);
 });
