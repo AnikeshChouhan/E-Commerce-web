@@ -17,7 +17,7 @@ import { ShoppingListing } from "./pages/shopping-view/listing";
 import { UnauthPage } from "./pages/unauth-page";
 
 const App = () => {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   const user = {
     name: "anikesh",
     role: "admin",
