@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import { CommonForm } from "../../components/common/form";
 import { loginFormControl } from "../../config/index";
+import { loginUser } from "../../store/auth-slice/index";
 
 const initialState = {
   email: " ",
@@ -9,8 +12,37 @@ const initialState = {
 };
 
 export const AuthLogin = () => {
-  function onSubmit() {}
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialState);
+  function onSubmit(event) {
+    event.preventDefault();
+    dispatch(loginUser(formData)).then((data) => {
+      console.log(data);
+      if (data?.payload?.success) {
+        toast(data.payload.message, {
+          icon: "🔥",
+          style: {
+            background: "#1e1",
+            color: "#fff",
+            border: "1px solid #ff9800",
+            borderRadius: "10px",
+            padding: "10px",
+          },
+        });
+      } else {
+        toast(data.payload.message, {
+          icon: "😫",
+          style: {
+            background: "red",
+            color: "#fff",
+            border: "1px solid #ff9800",
+            borderRadius: "10px",
+            padding: "10px",
+          },
+        });
+      }
+    });
+  }
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
@@ -19,7 +51,7 @@ export const AuthLogin = () => {
         </h1>
         <p> Don't Have Any Account </p>
         <Link
-          className="font-medium ml-2 text-primary hover:underline"
+          className="font-medium ml-2 text-primary hover:underline "
           to={"/auth/register"}
         >
           Register
@@ -27,7 +59,7 @@ export const AuthLogin = () => {
       </div>
       <CommonForm
         formControls={loginFormControl}
-        buttonText={"Sign up "}
+        buttonText={"Login"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}

@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { CommonForm } from "../../components/common/form";
 import { registerFormControl } from "../../config/index";
+import { registerUser } from "../../store/auth-slice/index";
 
 const initialState = {
   userName: "",
@@ -10,8 +13,42 @@ const initialState = {
 };
 
 export const AuthRegister = () => {
-  function onSubmit() {}
+  // const user = useSelector((state) => state.auth.user);
+  // console.log(user);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+  function onSubmit(event) {
+    event.preventDefault();
+    dispatch(registerUser(formData)).then((data) => {
+      // navigate("/auth/login");
+      if (data?.payload?.success) {
+        toast(data.payload.message, {
+          icon: "🔥",
+          style: {
+            background: "#1e1",
+            color: "#fff",
+            border: "1px solid #ff9800",
+            borderRadius: "10px",
+            padding: "10px",
+          },
+        });
+        navigate("/auth/login");
+      } else {
+        toast(data.payload.message, {
+          icon: "😫",
+          style: {
+            background: "red",
+            color: "#fff",
+            border: "1px solid #ff9800",
+            borderRadius: "10px",
+            padding: "10px",
+          },
+        });
+      }
+    });
+  }
+  // console.log(formData);
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
@@ -26,6 +63,7 @@ export const AuthRegister = () => {
           Login
         </Link>
       </div>
+
       <CommonForm
         formControls={registerFormControl}
         buttonText={"Sign up "}

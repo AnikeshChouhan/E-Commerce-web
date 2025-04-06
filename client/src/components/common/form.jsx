@@ -23,11 +23,11 @@ export const CommonForm = ({
   onSubmit,
   buttonText,
 }) => {
+  console.log({ ...formData });
   function renderInputsByComponentsType(getControlItem) {
     let element = null;
     // There is a doubt formData[getControlItem.name]
-    const value = formData[getControlItem?.name];
-    // console.log(getControlItem?);
+    const value = formData[getControlItem?.name]; //
     switch (getControlItem?.componentType) {
       case types.INPUT:
         element = (

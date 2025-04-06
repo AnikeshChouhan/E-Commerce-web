@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { AdminLayout } from "./components/admin-view/layout";
 import { AuthLayout } from "./components/auth/layout";
@@ -17,11 +18,7 @@ import { ShoppingListing } from "./pages/shopping-view/listing";
 import { UnauthPage } from "./pages/unauth-page";
 
 const App = () => {
-  const isAuthenticated = false;
-  const user = {
-    name: "anikesh",
-    role: "admin",
-  };
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   return (
     <>
       <div className="flex flex-column overflow-hidden bg-white">
