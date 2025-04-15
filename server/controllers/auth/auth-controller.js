@@ -46,7 +46,7 @@ export const loginUser = async (req, res) => {
       });
     }
     const checkPassword = await bcrypt.compare(password, exist.password);
-    console.log(checkPassword);
+
     if (!checkPassword) {
       res.status(401).json({
         success: false,
@@ -63,17 +63,19 @@ export const loginUser = async (req, res) => {
       { expiresIn: "60m" }
     );
 
-    res.cookie("token", token, { httpOnly: true }).json({
-      success: "true",
-      message: "Login Successfully",
-      user: {
-        email: exist.email,
-        role: exist.role,
-        id: exist._id,
-      },
-    });
+    res
+      .cookie("token", token, { httpOnly: true })
+      .status(201)
+      .json({
+        success: "true",
+        message: "Login Successfully",
+        user: {
+          email: exist.email,
+          role: exist.role,
+          id: exist._id,
+        },
+      });
   } catch (error) {
-    console.log(error);
     res.json({
       success: false,
       message: `Some Errror Accured Login `,
@@ -81,4 +83,30 @@ export const loginUser = async (req, res) => {
   }
 };
 //logout
+export const logoutUser = (req, res) => {
+  res.clearCookie("token").json({
+    success: true,
+    message: "Logged Successfully",
+  });
+};
 // auth- middlewares
+export const authMiddleWare = (req, res, next) => {
+  const token = req.cookies.token;
+  console.log("tokennnn" + token);
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized User!",
+    });
+  }
+  try {
+    const decode = jwt.verify(token, "CLIENT_SECRET_KEY");
+    req.user = decode;
+    next();
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "Unauthorized User!",
+    });
+  }
+};
