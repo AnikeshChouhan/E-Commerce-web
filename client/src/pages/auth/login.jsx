@@ -22,9 +22,9 @@ export const AuthLogin = () => {
         toast(data.payload.message, {
           icon: "🔥",
           style: {
-            background: "#1e1",
-            color: "#fff",
-            border: "1px solid #ff9800",
+            background: "white",
+            color: "#000",
+            border: "1px solid #000",
             borderRadius: "10px",
             padding: "10px",
           },
@@ -35,7 +35,7 @@ export const AuthLogin = () => {
           style: {
             background: "red",
             color: "#fff",
-            border: "1px solid #ff9800",
+            border: "1px solid #fff",
             borderRadius: "10px",
             padding: "10px",
           },

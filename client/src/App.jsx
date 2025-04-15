@@ -1,9 +1,11 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { AdminLayout } from "./components/admin-view/layout";
 import { AuthLayout } from "./components/auth/layout";
 import { CheckAuth } from "./components/common/check-auth";
 import { ShoppingLayout } from "./components/shopping-view/layout";
+import { Skeleton } from "./components/ui/skeleton";
 import { AdminDashboard } from "./pages/admin-view/dashboard";
 import { AdminFeatures } from "./pages/admin-view/features";
 import { AdminOrders } from "./pages/admin-view/orders";
@@ -16,12 +18,33 @@ import { ShoppingCheckout } from "./pages/shopping-view/checkout";
 import { ShoppingHome } from "./pages/shopping-view/home";
 import { ShoppingListing } from "./pages/shopping-view/listing";
 import { UnauthPage } from "./pages/unauth-page";
+import { checkAuth } from "./store/auth-slice";
 
 const App = () => {
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, isLoading } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  {
+    if (isLoading)
+      return (
+        <div className="flex items-center space-x-4">
+          <Skeleton className="h-12 w-12 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
+      );
+  }
+
   return (
     <>
-      <div className="flex flex-column overflow-hidden bg-white">
+      <div className="flex flex-col overflow-hidden bg-white">
         <Routes>
           {/* auth */}
           <Route

@@ -23,7 +23,6 @@ export const CommonForm = ({
   onSubmit,
   buttonText,
 }) => {
-  console.log({ ...formData });
   function renderInputsByComponentsType(getControlItem) {
     let element = null;
     // There is a doubt formData[getControlItem.name]
@@ -58,15 +57,16 @@ export const CommonForm = ({
             value={value}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={getControlItem?.placeholder} />
+              <SelectValue placeholder={getControlItem?.label} />
             </SelectTrigger>
             <SelectContent>
               {getControlItem?.options && getControlItem?.options.length > 0
                 ? getControlItem?.options.map((optionItem) => {
-                    <SelectItem
-                      key={optionItem.id}
-                      value={optionItem.id}
-                    ></SelectItem>;
+                    return (
+                      <SelectItem key={optionItem.id} value={optionItem.id}>
+                        {optionItem.label}
+                      </SelectItem>
+                    );
                   })
                 : null}
             </SelectContent>
