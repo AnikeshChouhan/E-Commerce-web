@@ -38,7 +38,7 @@ export const loginFormControl = [
   },
 ];
 
-export const addproductFormElement = [
+export const addProductFormElement = [
   {
     label: "title",
     name: "title",
@@ -77,6 +77,10 @@ export const addproductFormElement = [
         id: "footwear",
         label: "Footwear",
       },
+      {
+        id: "Apple Phone",
+        label: "Apple Phone",
+      },
     ],
   },
   {
@@ -87,6 +91,10 @@ export const addproductFormElement = [
       {
         id: "nike",
         label: "Nike",
+      },
+      {
+        id: "apple",
+        label: "Apple",
       },
       {
         id: "adidas",
@@ -130,5 +138,42 @@ export const addproductFormElement = [
     componentType: "input",
     type: "number",
     placeholder: "Enter Total Stock",
+  },
+];
+export const shoppingViewHeaderMenuItems = [
+  {
+    id: "home",
+    label: "Home",
+    path: "/shop/home",
+  },
+  {
+    id: "men",
+    label: "Men",
+    path: "/shop/list",
+  },
+  {
+    id: "women",
+    label: "Women",
+    path: "/shop/list",
+  },
+  {
+    id: "kids",
+    label: "Kids",
+    path: "/shop/list",
+  },
+  {
+    id: "accessories",
+    label: "Accessories",
+    path: "/shop/list",
+  },
+  {
+    id: "apple",
+    label: "Apple",
+    path: "/shop/list",
+  },
+  {
+    id: "footwear",
+    label: "Footwear",
+    path: "/shop/list",
   },
 ];
