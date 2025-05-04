@@ -22,8 +22,8 @@ export const CommonForm = ({
   setFormData,
   onSubmit,
   buttonText,
+  isBtnDisabled,
 }) => {
-  console.log({ ...formData });
   function renderInputsByComponentsType(getControlItem) {
     let element = null;
     // There is a doubt formData[getControlItem.name]
@@ -58,15 +58,16 @@ export const CommonForm = ({
             value={value}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={getControlItem?.placeholder} />
+              <SelectValue placeholder={getControlItem?.label} />
             </SelectTrigger>
             <SelectContent>
               {getControlItem?.options && getControlItem?.options.length > 0
                 ? getControlItem?.options.map((optionItem) => {
-                    <SelectItem
-                      key={optionItem.id}
-                      value={optionItem.id}
-                    ></SelectItem>;
+                    return (
+                      <SelectItem key={optionItem.id} value={optionItem.id}>
+                        {optionItem.label}
+                      </SelectItem>
+                    );
                   })
                 : null}
             </SelectContent>
@@ -124,7 +125,7 @@ export const CommonForm = ({
         ))}
       </div>
 
-      <Button type="submit" className={"mt-2 w-full"}>
+      <Button disabled={isBtnDisabled} type="submit" className={"mt-2 w-full"}>
         {" "}
         {buttonText || "Submit"}
       </Button>

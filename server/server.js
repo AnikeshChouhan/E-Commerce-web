@@ -3,11 +3,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+//export defaults
+import adminProductsRouter from "./routes/admin/products-routes.js";
+import shopProductsRouter from "./routes/shop/products-routes.js";
+// as it is but we can change name by using {as} key
 import { router as authRoutes } from "./routes/auth/auth-routes.js";
-
 dotenv.config();
 const PORT = process.env.PORT || 5000;
-console.log(authRoutes);
 // Connect to MongoDB
 // const promise = mongoose.connect(
 //   "mongodb+srv://ecommerceproject558:ecommerceproject558@ecommerce.gsxb2.mongodb.net/"
@@ -53,6 +55,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/admin/products", adminProductsRouter);
+app.use("/api/shop/products", shopProductsRouter);
 app.listen(PORT, () => {
   console.log("Server is Running on " + PORT);
 });

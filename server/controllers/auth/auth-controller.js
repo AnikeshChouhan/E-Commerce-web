@@ -19,14 +19,14 @@ export const registerUser = async (req, res) => {
       password: hashPassword,
     });
     await newUser.save();
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       message: "registertion Successfully",
       // myUser: newUser,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "some Error Occured register",
     });
@@ -38,9 +38,9 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const exist = await User.findOne({ email });
-
+    console.log(exist.userName);
     if (!exist) {
-      res.status(404).json({
+      return res.status(404).json({
         success: false,
         message: `User Doesn't exist ! please Register first  `,
       });
@@ -48,7 +48,7 @@ export const loginUser = async (req, res) => {
     const checkPassword = await bcrypt.compare(password, exist.password);
 
     if (!checkPassword) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: `password is incorrect ! Please try again`,
       });
@@ -58,6 +58,7 @@ export const loginUser = async (req, res) => {
         id: exist._id,
         role: exist.role,
         email: exist.email,
+        userName: exist.userName,
       },
       "CLIENT_SECRET_KEY",
       { expiresIn: "60m" }
@@ -73,6 +74,7 @@ export const loginUser = async (req, res) => {
           email: exist.email,
           role: exist.role,
           id: exist._id,
+          userName: exist.userName,
         },
       });
   } catch (error) {
@@ -92,7 +94,6 @@ export const logoutUser = (req, res) => {
 // auth- middlewares
 export const authMiddleWare = (req, res, next) => {
   const token = req.cookies.token;
-  console.log("tokennnn" + token);
   if (!token) {
     return res.status(401).json({
       success: false,
@@ -104,7 +105,7 @@ export const authMiddleWare = (req, res, next) => {
     req.user = decode;
     next();
   } catch (error) {
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       message: "Unauthorized User!",
     });
