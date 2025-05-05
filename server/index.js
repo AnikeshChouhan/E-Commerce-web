@@ -9,7 +9,7 @@ import shopProductsRouter from "./routes/shop/products-routes.js";
 // as it is but we can change name by using {as} key
 import { router as authRoutes } from "./routes/auth/auth-routes.js";
 dotenv.config();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 // Connect to MongoDB
 // const promise = mongoose.connect(
 //   "mongodb+srv://ecommerceproject558:ecommerceproject558@ecommerce.gsxb2.mongodb.net/"
