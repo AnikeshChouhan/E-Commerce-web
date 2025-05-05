@@ -42,13 +42,13 @@ app.use(
   cors({
     origin: "https://e-commerce-web-frontend-9kb5.onrender.com",
     methods: ["GET", "POST", "DELETE", "PUT"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Cache-Control",
-      "expires",
-      "paragma",
-    ],
+    // allowedHeaders: [
+    //   "Content-Type",
+    //   "Authorization",
+    //   "Cache-Control",
+    //   "expires",
+    //   "paragma",
+    // ],
     credentials: true,
   })
 );
