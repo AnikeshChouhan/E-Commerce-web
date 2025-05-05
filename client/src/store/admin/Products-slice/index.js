@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const url = "https://e-commerce-web-backend-krf7.onrender.com";
 const initialState = {
   isLoading: false,
   productList: [],
@@ -10,15 +10,11 @@ export const addNewProduct = createAsyncThunk(
   "/product/addNewProduct",
   // action
   async (formData) => {
-    const result = await axios.post(
-      "http://localhost:5000/api/admin/products/add",
-      formData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const result = await axios.post(`${url}/api/admin/products/add`, formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return result?.data;
   }
 );
@@ -26,9 +22,7 @@ export const addNewProduct = createAsyncThunk(
 export const fetchAllProducts = createAsyncThunk(
   "/products/fetchAllProducts",
   async () => {
-    const result = await axios.get(
-      "http://localhost:5000/api/admin/products/get"
-    );
+    const result = await axios.get(`${url}/api/admin/products/get`);
     return result?.data;
   }
 );
@@ -37,7 +31,7 @@ export const editProduct = createAsyncThunk(
   "products/editProduct",
   async ({ id, formData }) => {
     const result = await axios.put(
-      `http://localhost:5000/api/admin/products/edit/${id}`,
+      `${url}/api/admin/products/edit/${id}`,
       formData,
       {
         headers: {
@@ -52,9 +46,7 @@ export const editProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (id) => {
-    const result = await axios.delete(
-      `http://localhost:5000/api/admin/products/delete/${id}`
-    );
+    const result = await axios.delete(`${url}/api/admin/products/delete/${id}`);
     return result?.data;
   }
 );
