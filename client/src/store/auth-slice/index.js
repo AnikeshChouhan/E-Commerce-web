@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const url = "https://e-commerce-web-backend-krf7.onrender.com";
 
 // const initialState = {
 //   isAuthenticated: false,
@@ -114,11 +115,9 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData, thunkAPI) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formData,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${url}/api/auth/register`, formData, {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -132,11 +131,9 @@ export const loginUser = createAsyncThunk(
   "/auth/login",
   async (formData, thunkAPI) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${url}/api/auth/login`, formData, {
+        withCredentials: true,
+      });
 
       return response.data;
     } catch (error) {
@@ -151,16 +148,13 @@ export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/auth/check-auth",
-        {
-          withCredentials: true,
-          headers: {
-            "Cache-Control":
-              "no-store , no-Cache , must-revalidate , proxy-revalidate",
-          },
-        }
-      );
+      const response = await axios.get(`${url}/api/auth/check-auth`, {
+        withCredentials: true,
+        headers: {
+          "Cache-Control":
+            "no-store , no-Cache , must-revalidate , proxy-revalidate",
+        },
+      });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -172,7 +166,7 @@ export const checkAuth = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk("/auth/logout", async () => {
   const response = await axios.post(
-    "http://localhost:5000/api/auth/logout",
+    `${url}/api/auth/logout`,
     {},
     {
       withCredentials: true,

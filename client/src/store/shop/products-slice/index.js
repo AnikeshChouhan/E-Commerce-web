@@ -5,6 +5,7 @@ const initialState = {
   productsList: [],
   productDetails: null,
 };
+const url = "https://e-commerce-web-backend-krf7.onrender.com";
 
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchAllProducts",
@@ -14,9 +15,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
       sortBy: sortParams,
     });
 
-    const result = await axios.get(
-      `http://localhost:5000/api/shop/products/get?${query}`
-    );
+    const result = await axios.get(`${url}/api/shop/products/get?${query}`);
     // console.log(result.data);
     return result?.data;
   }
@@ -24,9 +23,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
 export const fetchProductsDetails = createAsyncThunk(
   "/products/fetchProductsDetails",
   async (id) => {
-    const result = await axios.get(
-      `http://localhost:5000/api/shop/products/get/${id}`
-    );
+    const result = await axios.get(`${url}/api/shop/products/get/${id}`);
     return result?.data;
   }
 );
